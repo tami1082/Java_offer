@@ -71,3 +71,143 @@ public class Hello {
 }
 
 ```
+
+## 数值的表示
+```java
+public class inter_extra {
+    public static void main(String[] args) {
+        //整数扩展：进制，二进制0b，十进制，八进制0，十六进制0x
+        int i = 10;
+        int i2 = 010;
+        int i3 = 0x10;
+        System.out.println(i);
+        System.out.println(i2);
+        System.out.println(i3);
+//        浮点数，银行业务用float表示钱， 所以银行用BigDecimal 数学工具类
+        float f = 0.1f;
+        double d = 1.0/10;
+        System.out.println(f==d);//输出false
+        System.out.println(f);
+        System.out.println(d);
+
+        float d1 = 2312323443f;
+        float d2 = d1+1;
+        System.out.println(d1==d2);//true
+//        float 有限 离散 舍入误差 大约 接近但不等于  最好完全避免浮点数进行比较
+//        double
+
+//        字符 所有字符都是数字，char设计编码问题，Unicode 2字节 65536（2^16）
+        char c1 = 'a';
+        char c2 = '中';
+        System.out.println(c1);
+        System.out.println((int)c1);//97
+        System.out.println(c2);
+        System.out.println((int)c2);//20013
+
+        //U0000 UFFFF
+        char c3 = '\u0061';
+        System.out.println(c3);
+
+        //转义字符 \t 是 tab \n 换行
+        // 布尔
+        boolean flag = true;
+        if (flag){}
+        //if (flag == true){} 一般新手这样，双重确定
+    }
+}
+```
+
+## 类型转换
+```java
+public class type_conver {
+    public static void main(String[] args) {
+        // 低-----高
+        // byte, short, char, int, long, float, double
+        int i = 128;
+        byte b = (byte) i;
+        System.out.println(i);//128
+        System.out.println(b);//-128 内存溢出了，最大是127
+        // 加括号是强制转换  高--低 强制
+        // 低--高 自动转换
+        double d = i;
+        System.out.println(d);//128.0
+
+        /**
+         * 不能对布尔类型转换
+         * 不能把对象类型转换成不相干的类型
+         * 在把高容量转换到低容量的时候，强制转换
+         * 转换的时候可能存在内存溢出，或精度问题
+         */
+        System.out.println((int)23.7); //double 23
+        System.out.println((int)-45.89f); // float -45
+
+        char c = 'a';
+        int r = c + 1;
+        System.out.println(r); //98
+        System.out.println((int)r); //b
+
+        //操作比较打的时候，注意溢出的问题
+        int money = 10_0000_0000;
+        int year = 20;
+        int to = money * year; //-1474836480 操作溢出了
+        long to2 = money * year; //-1474836480 结果一样，因为是先保存int 计算完之后才是long
+        System.out.println(to2);
+        long to3 = money * (long)year; //20000000000
+        System.out.println(to3);
+        //L l 小写会被看成1
+
+    }
+}
+```
+## 变量
+所有变量，方法，类名：见名知意  
+类成员变量：首字母小写和驼峰原则：除第一个单词意外，后面都大写 monthSalary  
+局部变量，方法名：首字母小写和驼峰原则：runRun()  
+常量：大写字母和下划线：MAX——VALUE  
+类名：首字母大写和驼峰原则，Many，GoodMoring  
+```java
+import com.sun.jdi.Type;
+import com.sun.jdi.Value;
+import com.sun.jdi.VirtualMachine;
+
+public class value {
+    // main方法， 还可以定义属性
+    // 类变量 static
+    static double salary = 2500; //类内直接引用 不用初始化class
+    // 实列变量
+    // 局部变量
+    //实列变量：从属于对象/类，有默认值，0，null，false
+    String name;
+    int age;
+
+    //常量 final 这个单词的位置不区分前后，修饰符
+    static final double pi = 3.14;
+
+    public static void main(String[] args) {
+        // Java 是一个强类型语言，每个变量都必须声明其类型，指定空间
+        //Java变量是程序中最基础的存储单元，其要素包括变量名，变量类型和作用域
+        // type varName [=value] [{, varName[=value]}] 不建议一行定义多个值
+        //每个变量都有类型，类型可以是基本类型，也可以是引用类型，合法标识符
+        //int a,b,c; //不建议这样
+
+        // 局部变量，必须声明和初始化
+        int a=1, b=2, c=3;
+        String name = "lala";
+        char x = 'X';
+        double pi = 3.14;
+
+        //变量类型 变量名字 = new value（）; 自动初始化实列变量
+        value Value = new value();
+        System.out.println(Value.age);
+
+        //类变量
+        System.out.println(salary);
+    }
+
+    // 其他方法
+    public void add(){
+
+    }
+
+}
+```
