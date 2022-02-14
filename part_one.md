@@ -211,3 +211,115 @@ public class value {
 
 }
 ```
+## java [运算符](https://www.runoob.com/java/java-operators.html?_t_t_t=0.3133259497117251)  
+算术运算符\关系运算符\位运算符\逻辑运算符\赋值运算符\条件运算符\扩展赋值运算符  
+```java
+public class operator {
+    public static void main(String[] args) {
+        // 二元运算符 ctrl+d 复制当前行到下一行
+        int a = 10;
+        int b = 10;
+        int c = 10;
+        int d = 10;
+        System.out.println(a+b);
+        System.out.println(a-b);
+        System.out.println(a*b);
+        System.out.println(a/b);
+        System.out.println(a/(double)b);
+
+        //按类型优先级自动转换，参与运算中最高的类型的等级转换
+        long m = 12212312L;
+        int n = 123;
+        short f = 10;
+        byte r = 8;
+        System.out.println(a+b+c+d);// long
+        System.out.println(b+c+d); // int
+        System.out.println(c+d); // int
+
+        // 关系运算符 布尔值
+        int q = 10;
+        int w = 20;
+        int e = 21;
+        System.out.println(e%q);// e/q 21/10 =2..1
+        System.out.println(q>w);
+        System.out.println(q<w);
+        System.out.println(q==w);
+        System.out.println(q!=w);
+    }
+}
+```
+
+自增运算符/自减  
+```java
+public class self_add {
+    public static void main(String[] args) {
+        // ++ --
+        // a++ 先赋值在运算
+        // ++a 先运算在赋值
+        int a = 2;
+        int b = a++;
+//        a = a+1 //这句没有执行，隐藏代码，但是执行了
+        System.out.println(a);//3
+//        a = a+1
+        int c = ++a;
+
+        System.out.println(a);//4
+        //System.out.println(a);//4
+        System.out.println(b);//2
+        //System.out.println(b);//2
+        System.out.println(c);//4
+        //System.out.println(c);//4
+
+        // 幂运算 2^3, 很多运算使用工具类运算
+        double u = Math.pow(2,3);
+        System.out.println(u);
+    }
+}
+```
+逻辑运算符
+```java
+public class logic_op {
+    public static void main(String[] args) {
+        boolean a = true;
+        boolean b = false;
+        System.out.println("a && b "+(a&&b)); //与运算，都为真 - 真
+        System.out.println("a || b "+(a||b)); // 或运算 一个为真 - 真
+        System.out.println("!(a && b) "+!(a&&b)); // 真变假
+        //短路运算，第一个条件为假后面的条件就不执行了
+        //测试如果执行，c会自增1
+        int c = 5;
+        boolean r = (c<4)&&(c++<4);
+        System.out.println(r);
+        System.out.println(c);//5 没有增加，所以短路了
+
+        // 位运算
+        /*
+        * A=0011 1100
+        * B=0000 1101
+        * A&B = 0000 1100
+        * A|B = 0011 1101
+        * A^B =
+        * ~B
+        * << 左移*2 >> 右移➗2
+        * 0000 0000   0
+        * 0000 1000   8
+        *
+        * */
+
+        // 三元运算符
+        int d = 10;
+        int f = 20;
+        d+=f; // d = d+f
+        d-=f; // d = d-f
+        System.out.println(d);
+        System.out.println(""+d+f); //字符串会把后面的东西穿在一起   1020
+        System.out.println(d+f+""); // 30 字符串在前面会穿 在后面会运算
+
+        // x ? y:z
+        //如果x == true 则结果为y, 否则结果为z
+        int score = 80;
+        String type = score < 60 ? "no":"yes";
+        System.out.println(type);
+    }
+}
+```
