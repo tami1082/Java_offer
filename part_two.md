@@ -159,3 +159,152 @@ public class WhileTest {
     }
 }
 ```
+## for循环
+```java
+for(initial; boolean; update){
+\\code}
+```
+```java
+package flow;
+
+/*
+最先执行的初始化步骤，可以声明一种类型，但可初始化一个或多个循环控制变量，也可以是空语句
+检测布尔表达式值
+执行一次循环后，更新循环变量
+再次检测布尔表达式
+ */
+
+import java.util.Arrays;
+
+public class ForFlow {
+    public static void main(String[] args) {
+//        int a = 1; //intial condition
+//
+//        while(a<101){ //判断条件
+//            System.out.println(a); //循环体
+//            a+=2;// a=a+2 迭代
+//        }
+//
+//        //初始化；条件判断；迭代
+//        for(int i = 1; i<101; i++){
+//            System.out.println(i);
+//        }
+//        //100.for 自动生成上面的
+//        for (;; ) {
+//            //死循环
+//        }
+        //奇数偶数的和
+//        int oddsum = 0;
+//        int evensum = 0;
+//        for (int i = 0; i < 100; i++) {
+//            if (i%2 !=0){ //取模 奇数
+//                oddsum+=i;
+//            }else {
+//                evensum+=i;
+//            }
+//        }
+//        System.out.println(oddsum+" "+evensum);
+        // while/for循环输出1-1000之间被5整除的数，并每行输出3个
+//        int count = 0;
+////        for (int i = 1; i < 1001; i++) {
+////            if(i%5 == 0){
+////                if (count<3){
+////                    System.out.print(i+"\t"); // println 是每个输出就换行，print连续输出
+////                    count+=1;
+////                }else{
+////                    System.out.println("\n");
+////                    count = 0;
+////                    System.out.print(i+"\t");
+////                    count+=1;
+////                }
+////            }
+////        }
+//        int count = 0;
+//        int i = 0;
+//        while(i<101){
+//            if(i%5==0){
+//                if (count<3){
+//                    System.out.print(i+"\t");
+//                    count+=1;
+//                }else{
+//                    System.out.println();
+//                    count=0;
+//                    System.out.print(i+"\t");
+//                    count+=1;
+//                }
+//            }
+//            i++;
+//        }
+////        for (int i = 0; i < 1001; i++) {
+////            if(i%5==0){
+////                System.out.print(i+"\t");
+////            }
+////            if(i%(5*3)==0){
+////                System.out.println("\n");
+////            }
+////        }
+        //九九乘法表
+        for (int i = 1; i < 10; i++) {
+            for(int j = 1; j<=i;j++){
+                System.out.print(i+"*"+j+"="+i*j+"\t");
+            }
+            System.out.println();
+        }
+    }
+}
+//增强for循环
+        int[] num = {10,20,30,40};//定义一个数组
+        for (int x: num){
+            System.out.println(x);
+        }
+        for (int i = 0; i < 4; i++) {
+            System.out.println(num[i]);
+        }
+```
+## break continue
+```java
+        int i =0;
+        while(i<100){
+            i++;
+//            if(i==30){
+//                break;//强制退出
+//            }
+            if(i%10==0){
+                System.out.println();
+                continue; //终止某次，还能循环呢
+            }
+            System.out.println(i);
+        }
+	int count = 0;
+        outer: for (int i = 101; i < 150; i++) {
+            for(int j=2; j<i/2; j++){
+                if(i%j ==0){
+                    continue outer;
+                }
+            }
+            System.out.println(i+" ");
+        }
+```
+```java
+//打印三角形 5行
+        /*
+0000*
+000**1
+00***11
+0****111
+*****1111
+         */
+        for (int i = 1; i <= 5; i++) {
+            for(int j = 5; j>i; j--){
+                System.out.print("0");
+            }
+            for(int j = 1; j<=i; j++){
+                System.out.print("*");
+            }
+            for(int j = 1; j<i; j++){
+                System.out.print("1");
+            }
+            //这个顺序执行的话，是在每行接着输出的呢！！！
+            System.out.println();
+        }
+```
