@@ -187,6 +187,178 @@ zz4
   实现接口Runnable具有多线程能力  
   启动线程：传入目标对象+Thread对象.start()  
   推荐使用：**灵活方便，方便同一个对象被多个线程使用**  
+车票的案列  
+```java
+package thread;
+
+//多个线程同时操作同一个对象
+//买火车票的列子
+public class MyThread4 implements Runnable{
+    private int ticket = 10;
+
+
+    @Override
+    public void run() {
+        while(true){
+            if(ticket<=0){
+                break;
+            }
+            System.out.println(Thread.currentThread().getName() + "--->who " + ticket-- + "piao");
+        }
+    }
+
+    public static void main(String[] args) {
+        MyThread4 t = new MyThread4();
+
+        /* 这里面的name是下面那个new的thread的名字
+         MyThread3 myThread3 = new MyThread3();
+         Thread thread = new Thread(myThread3);
+         thread.start();
+         */
+        new Thread(t,"li").start();
+        new Thread(t,"wang").start();
+        new Thread(t,"lu").start();
+    }
+}
+/* 可能出现问题，同个线程拿到一样的票号，数据紊乱，不安全
+li--->who 10piao
+wang--->who 9piao
+lu--->who 8piao
+wang--->who 6piao
+li--->who 7piao
+wang--->who 4piao
+lu--->who 5piao
+wang--->who 2piao
+li--->who 3piao
+lu--->who 1piao
+ */
+ ```
+ 
+ ## 龟兔赛跑
+ ```java
+ package thread;
+
+/*
+首先来个赛道距离，然后要离终点越来越近
+判断比赛是否结束
+打印出获胜者
+龟兔赛跑开始；乌龟赢了，兔子睡觉，模拟兔子睡觉
+ */
+public class GuiTu implements Runnable{
+
+    private static String winner;
+
+    @Override
+    public void run() {
+        for (int i = 0; i <= 100; i++) {
+            if (Thread.currentThread().getName().equals("tu") ){
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            boolean flag = gameOver(i);
+            if (flag==true){
+                System.out.println(Thread.currentThread().getName()+" winner");
+                break;
+            }
+            System.out.println(Thread.currentThread().getName()+" ---> "+i+" steps");
+        }
+    }
+
+    //判断游戏是否停止
+    private boolean gameOver(int i){
+        if (winner!=null){
+            return true;
+        }{
+            if (i>=100){
+                winner = Thread.currentThread().getName();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        GuiTu guiTu = new GuiTu();
+        new Thread(guiTu,"gui").start();
+        new Thread(guiTu,"tu").start();
+    }
+}
+```
+
+## callable
+1.实现Callable接口，需要返回值类型  
+2.重写call方法，需要抛出异常  
+3.创建目标对象  
+4. 创建执行服务： ExecutorService ser = Executors.newFixedThreadPool（1）；5. 提交执行： Future<Boolean> result1 = ser.submit（t1）；  
+6. 获取结果： boolean r1 = result1.get（）  
+7. 关闭服务： ser.shutdownNow（）；  
   
-  
+```java
+  package thread;
+
+import method.CalAdd;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.*;
+//这个boolean可以换，可以定义返回值，可以抛出异常
+public class Calble implements Callable<Boolean> {
+
+    private String url;
+    private String name;
+
+    public Calble(String url, String name) {
+        this.url = url;
+        this.name = name;
+    }
+
+    @Override
+    public Boolean call() {
+//        super.run();
+        WeDown weDown = new WeDown();
+        weDown.downloader(url,name);
+        System.out.println("kaishi "+name);
+        return true;
+    }
+
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        Calble myThread2 = new Calble("https://img2018.cnblogs.com/blog/1468796/201902/1468796-20190208222216724-198813524.png", "c2.png");
+        Calble myThread3 = new Calble("https://img-blog.csdnimg.cn/20190530121245684.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQzNDExNTUw,size_16,color_FFFFFF,t_70", "c3.png");
+
+        //创建执行服务
+        ExecutorService ser = Executors.newFixedThreadPool(2);
+        //提交执行
+        Future<Boolean> r1 = ser.submit(myThread2);
+        Future<Boolean> r2 = ser.submit(myThread3);
+
+        boolean r11 = r1.get();
+        boolean r22 = r2.get();
+        ser.shutdownNow();
+    }
+}
+
+
+
+class WeDown{
+    //下载方法
+    public void downloader(String url, String name){
+
+        try {
+            FileUtils.copyURLToFile(new URL(url), new File(name));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("IO异常");
+        }
+    }
+}
+```
+
+
   
